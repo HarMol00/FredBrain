@@ -1,0 +1,39 @@
+﻿<Window x:Class="FredBrain.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Name="FredBrainMain"
+        Title="Fred"
+        ResizeMode="CanMinimize"
+        Style="{DynamicResource MainWindowStyle}"
+        AllowsTransparency="True" 
+        WindowStyle="None" 
+        Topmost="True"
+        >
+
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Close" Executed="CloseCommandHandler"/>
+    </Window.CommandBindings>
+    
+    <DockPanel>
+        <DockPanel.LayoutTransform>
+            <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}"/>
+        </DockPanel.LayoutTransform>
+
+        <Border Name="BrainBorder" Style="{DynamicResource BrainBorderStyle}" Height="125" Width="200">
+            <UniformGrid Margin="2">
+                <TextBox Text="{Binding Path=Lok1, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource TextBoxStyle}"/>
+                <TextBox Text="{Binding Path=Lok2, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource TextBoxStyle}"/>
+                <TextBox Text="{Binding Path=Lok3, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource TextBoxStyle}"/>
+                <TextBox Text="{Binding Path=Lok4, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource TextBoxStyle}"/>
+            </UniformGrid>
+        </Border>
+
+        <StackPanel Visibility="{Binding ElementName=FredBrainMain, Path=IsMouseOver, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Button Command="ApplicationCommands.Close" Style="{DynamicResource CloseButtonStyle}"/>
+            <Control Style="{DynamicResource MoveHandleStyle}" MouseLeftButtonDown="MoveHandleMouseLeftButtonDown"/>
+            <RadioButton Style="{DynamicResource ZoomButtonStyle}" MinHeight="0.8" MinWidth="0.1" IsChecked="{Binding Zoom20}"/>
+            <RadioButton Style="{DynamicResource ZoomButtonStyle}" MinHeight="0.6" MinWidth="0.2" IsChecked="{Binding Zoom10}"/>
+            <RadioButton Style="{DynamicResource ZoomButtonStyle}" MinHeight="0.4" MinWidth="0.3" IsChecked="{Binding Zoom05}"/>
+        </StackPanel>
+    </DockPanel>
+</Window>
